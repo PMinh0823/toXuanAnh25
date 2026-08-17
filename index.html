@@ -1,132 +1,99 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>to Xuân Anh ♡</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 30px 15px;
-            font-family: Arial, sans-serif;
-            background: #fff8f5;
-            color: #3b3030;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 700px;
-            background: white;
-            padding: 40px;
-            border-radius: 24px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            text-align: center;
-        }
-
-        h1 {
-            margin-top: 0;
-            font-size: 36px;
-            font-weight: 600;
-        }
-
-        .subtitle {
-            color: #888;
-            margin-bottom: 30px;
-        }
-
-        .photo {
-            width: 100%;
-            max-width: 500px;
-            height: auto;
-            border-radius: 18px;
-            display: block;
-            margin: 0 auto 30px;
-        }
-
-        .message {
-            text-align: left;
-            line-height: 1.8;
-            font-size: 17px;
-        }
-
-        .heart {
-            font-size: 28px;
-            margin-top: 30px;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 25px 20px;
-            }
-
-            h1 {
-                font-size: 30px;
-            }
-
-            .message {
-                font-size: 16px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>14293.3 km</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <div class="container">
+  <audio id="bg-music" src="music.mp3" loop preload="auto"></audio>
+  <button id="music-toggle" aria-label="Bật/tắt nhạc" title="Bật/tắt nhạc">
+    <span id="music-icon">♪</span>
+  </button>
 
-        <h1>Xuân Anh ♡</h1>
+  <canvas id="hearts-canvas"></canvas>
 
-        <div class="subtitle">
-            Một chút gì đó anh muốn gửi em
+  <!-- SCREEN 1: ENVELOPE -->
+  <section class="screen" id="envelope-screen">
+    <div class="envelope-wrap">
+      <div class="envelope" id="envelope">
+        <div class="distance-stamp">14293.3 km</div>
+        <div class="letter-peek">
+          <div class="letter-peek-text">✉</div>
         </div>
-
-        <!--
-            ĐỔI "images/photo.jpg" thành tên ảnh của mày.
-            Ví dụ:
-            <img src="images/christmas.jpg" ...>
-        -->
-        <img
-            class="photo"
-            src="images/photo.jpg"
-            alt="Một kỷ niệm"
-        >
-
-        <div class="message">
-
-            <p>
-                Xuân Anh à,
-            </p>
-
-            <p>
-                Anh làm cái này cũng khá lâu đấy =))
-            </p>
-
-            <p>
-                Có một vài thứ anh muốn lưu lại,
-                một vài kỷ niệm, và một vài điều mà anh muốn em biết.
-            </p>
-
-            <p>
-                Mong là em sẽ thích.
-            </p>
-
-        </div>
-
-        <div class="heart">
-            ♡
-        </div>
-
+        <div class="envelope-flap"></div>
+        <div class="envelope-body"></div>
+        <div class="wax-seal" id="wax-seal">♥</div>
+      </div>
+      <p class="hint">chạm vào phong thư để mở</p>
     </div>
+  </section>
 
+  <!-- SCREEN 1.5: LOCK QUESTION (yes/no, "no" runs away) -->
+  <section class="screen hidden-section" id="lock-screen">
+    <h2 class="lock-question" id="lock-question">Em có thích anh không?</h2>
+    <p class="lock-sub">(chọn đi, không trốn được đâu...)</p>
+    <div class="lock-btns" id="lock-btns">
+      <button class="lock-btn lock-btn-yes" id="yes-btn">Có</button>
+      <button class="lock-btn lock-btn-no" id="no-btn">Không</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 2: LETTER / TYPEWRITER (first, long message) -->
+  <section class="screen hidden-section" id="letter-screen">
+    <div class="letter-card">
+      <p id="typewriter-text" class="typewriter-text"></p>
+      <span class="cursor" id="cursor">|</span>
+    </div>
+    <button class="fade-btn fade-btn-primary" id="continue-btn">tiếp tục →</button>
+  </section>
+
+  <!-- SCREEN 3: GALLERY -->
+  <section class="screen hidden-section" id="gallery-screen">
+    <h2 class="section-title">những khoảnh khắc</h2>
+    <p class="section-sub">chạm vào từng ô để mở khoá kỷ niệm</p>
+    <div class="gallery-grid" id="gallery-grid">
+      <!-- Photo cards. Replace src="images/photoN.jpg" with your real images. -->
+      <div class="photo-card" data-caption="lần đầu nói chuyện">
+        <img src="images/photo1.jpg" alt="kỷ niệm 1">
+        <div class="lock-overlay"><span class="lock-icon">♥</span><span class="lock-label">nụ cười của em</span></div>
+      </div>
+      <div class="photo-card" data-caption="khoảnh khắc vui">
+        <img src="images/photo2.jpg" alt="kỷ niệm 2">
+        <div class="lock-overlay"><span class="lock-icon">♥</span><span class="lock-label">vuii hapii</span></div>
+      </div>
+      <div class="photo-card" data-caption="ngày đặc biệt">
+        <img src="images/photo3.jpg" alt="kỷ niệm 3">
+        <div class="lock-overlay"><span class="lock-icon">♥</span><span class="lock-label">all I want for Christmas</span></div>
+      </div>
+      <div class="photo-card" data-caption="nụ cười của em">
+        <img src="images/photo4.jpg" alt="kỷ niệm 4">
+        <div class="lock-overlay"><span class="lock-icon">♥</span><span class="lock-label">bạn bè th hả?</span></div>
+      </div>
+      <div class="photo-card" data-caption="kỷ niệm đáng nhớ">
+        <img src="images/photo5.jpg" alt="kỷ niệm 5">
+        <div class="lock-overlay"><span class="lock-icon">♥</span><span class="lock-label">bạn doraemon Minh</span></div>
+      </div>
+      <div class="photo-card" data-caption="mãi mãi">
+        <img src="images/photo6.jpg" alt="kỷ niệm 6">
+        <div class="lock-overlay"><span class="lock-icon">♥</span><span class="lock-label">mãi mãi</span></div>
+      </div>
+    </div>
+    <button class="fade-btn" id="to-closing-btn">tiếp tục →</button>
+  </section>
+
+  <!-- SCREEN 4: CLOSING (last message) -->
+  <section class="screen hidden-section" id="closing-screen">
+    <h2 class="closing-title">dù xa nhau bao xa,<br>tim anh vẫn hướng về em</h2>
+    <p class="closing-sub">chạm vào màn hình để thả thêm trái tim ♥</p>
+    <button class="fade-btn" id="close-letter-btn">đóng lại</button>
+  </section>
+
+  <script src="script.js"></script>
 </body>
 </html>

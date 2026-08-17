@@ -34,7 +34,7 @@ html, body {
   padding: 6vh 6vw;
   text-align: center;
   position: relative;
-  transition: opacity 0.8s ease;
+  transition: opacity 1.6s ease;
 }
 
 .hidden-section {
@@ -254,6 +254,43 @@ html, body {
   color: var(--blush);
   margin: 0;
   text-align: left;
+}
+
+.letter-card .letter-text + .letter-text,
+.letter-card .letter-text + .achievement-row {
+  margin-top: 26px;
+}
+
+.achievement-label {
+  margin-bottom: 0 !important;
+}
+
+.achievement-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  font-family: var(--display-font);
+  font-style: italic;
+  font-size: clamp(17px, 2.2vw, 23px);
+  color: var(--blush);
+  text-align: left;
+}
+
+.ticked-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--gold);
+  color: var(--bg-deep);
+  font-size: 14px;
+  font-weight: 700;
+  font-style: normal;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
 }
 
 .letter-actions {

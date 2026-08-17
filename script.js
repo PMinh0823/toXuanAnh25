@@ -17,8 +17,13 @@ const toClosingBtn = document.getElementById('to-closing-btn');
 const photoCards = document.querySelectorAll('.photo-card');
 
 function showScreen(el) {
+  el.style.opacity = '0';
   el.classList.remove('hidden-section');
   el.style.display = 'flex';
+  // Force a reflow so the browser registers opacity:0 as the real starting
+  // point before we animate to 1 — without this, the very first time a
+  // screen appears it can skip straight to visible instead of fading in.
+  void el.offsetWidth;
   requestAnimationFrame(() => { el.style.opacity = '1'; });
 }
 
@@ -27,7 +32,19 @@ function hideScreen(el) {
   setTimeout(() => {
     el.style.display = 'none';
     el.classList.add('hidden-section');
-  }, 700);
+  }, 1600);
+}
+
+/* Fade the current screen out completely, THEN fade the next one in —
+   avoids both screens being visible/stacked at the same time. */
+function transitionTo(fromEl, toEl, onComplete) {
+  fromEl.style.opacity = '0';
+  setTimeout(() => {
+    fromEl.style.display = 'none';
+    fromEl.classList.add('hidden-section');
+    showScreen(toEl);
+    if (onComplete) onComplete();
+  }, 1600);
 }
 
 /* ===================== Music ===================== */
@@ -60,8 +77,7 @@ envelope.addEventListener('click', () => {
   envelope.classList.add('opened');
   tryStartMusic();
   setTimeout(() => {
-    hideScreen(envelopeScreen);
-    showScreen(lockScreen);
+    transitionTo(envelopeScreen, lockScreen);
   }, 900);
 });
 
@@ -137,36 +153,28 @@ noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); dodgeNoBtnFar(
 noBtn.addEventListener('click', (e) => { e.preventDefault(); dodgeNoBtnNear(); });
 
 yesBtn.addEventListener('click', () => {
-  hideScreen(lockScreen);
-  showScreen(introScreen);
+  transitionTo(lockScreen, introScreen);
 });
 
 /* ===================== Letter flow (static text, no typewriter) ===================== */
 introContinueBtn.addEventListener('click', () => {
-  hideScreen(introScreen);
-  showScreen(letterScreen);
+  transitionTo(introScreen, letterScreen);
 });
 
 continueBtn.addEventListener('click', () => {
-  hideScreen(letterScreen);
-  showScreen(galleryScreen);
+  transitionTo(letterScreen, galleryScreen);
 });
 
 toClosingBtn.addEventListener('click', () => {
-  hideScreen(galleryScreen);
-  showScreen(closingScreen);
+  transitionTo(galleryScreen, closingScreen);
 });
 
 /* Close the last message and animate the envelope shut again (music keeps playing) */
 closeLetterBtn.addEventListener('click', () => {
   resetExperience();
-  hideScreen(closingScreen);
-  setTimeout(() => {
-    showScreen(envelopeScreen);
-    setTimeout(() => {
-      envelope.classList.remove('opened');
-    }, 150);
-  }, 700);
+  transitionTo(closingScreen, envelopeScreen, () => {
+    setTimeout(() => envelope.classList.remove('opened'), 150);
+  });
 });
 
 /* Reset everything back to its starting state so she can replay without refreshing */

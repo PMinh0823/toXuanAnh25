@@ -37,18 +37,51 @@
   <!-- SCREEN 1.5: LOCK QUESTION (yes/no, "no" runs away) -->
   <section class="screen hidden-section" id="lock-screen">
     <h2 class="lock-question" id="lock-question">Em có thích anh không?</h2>
-    <p class="lock-sub">(chọn đi, không trốn được đâu...)</p>
+    <p class="lock-sub">(chọn đi, không trốn được đâu... trừ một nút)</p>
     <div class="lock-btns" id="lock-btns">
       <button class="lock-btn lock-btn-yes" id="yes-btn">Có</button>
       <button class="lock-btn lock-btn-no" id="no-btn">Không</button>
     </div>
   </section>
 
-  <!-- SCREEN 2: LETTER / TYPEWRITER (first, long message) -->
+  <!-- SCREEN 2a: INTRO (short, before the main message) -->
+  <section class="screen hidden-section" id="intro-screen">
+    <div class="letter-card">
+      <p class="letter-eyebrow">Bonus Secret</p>
+      <p class="letter-text">Nếu em đang đọc được những dòng này thì anh đoán là anh đã chỉ em cách vào website rồi.
+Vì nếu anh không chỉ thì chắc vài năm nữa nó vẫn nằm ở đây thôi =))</p>
+    </div>
+    <button class="fade-btn fade-btn-primary" id="intro-continue-btn">tiếp tục →</button>
+  </section>
+
+  <!-- SCREEN 2b: MAIN MESSAGE -->
   <section class="screen hidden-section" id="letter-screen">
     <div class="letter-card">
-      <p id="typewriter-text" class="typewriter-text"></p>
-      <span class="cursor" id="cursor">|</span>
+      <p class="letter-text">FAQ
+Q: Đây là cái gì?
+A: Anh rảnh. Anh thích làm màu.
+Q: Anh làm mất bao lâu?
+A: Nhiều hơn mức cần thiết.
+Q: Tại sao?
+A: Em cũng biết rồi đó!
+
+Achievement unlocked:
+&lt;TickedBox&gt; Chúc ngủ ngon gần 1 năm liên tục
+
+Reward:
++100 consistency
++50 patience
++999 emotional damage
+
+Xuân Anh Statistics
+- Tự nhận mình dốt: quá nhiều lần
+- Chủ động nhắn tin trước: rất nhiều lần
+- Đem lại màu sắc: cầu vồng
+- Bắt anh điểm danh trước giờ ngủ: thành công
+- Khiến anh viết tận 6 tờ thư: 1 lần
+
+Anh vốn định viết ngắn thôi.
+Nhưng em cũng thấy kết quả rồi đấy.</p>
     </div>
     <button class="fade-btn fade-btn-primary" id="continue-btn">tiếp tục →</button>
   </section>
@@ -59,29 +92,29 @@
     <p class="section-sub">chạm vào từng ô để mở khoá kỷ niệm</p>
     <div class="gallery-grid" id="gallery-grid">
       <!-- Photo cards. Replace src="images/photoN.jpg" with your real images. -->
-      <div class="photo-card" data-caption="lần đầu nói chuyện">
+      <div class="photo-card" data-caption="nụ cười của em">
         <img src="images/photo1.jpg" alt="kỷ niệm 1">
         <div class="lock-overlay"><span class="lock-icon">♥</span><span class="lock-label">nụ cười của em</span></div>
       </div>
-      <div class="photo-card" data-caption="khoảnh khắc vui">
+      <div class="photo-card" data-caption="dthw dangiu">
         <img src="images/photo2.jpg" alt="kỷ niệm 2">
-        <div class="lock-overlay"><span class="lock-icon">♥</span><span class="lock-label">vuii hapii</span></div>
+        <div class="lock-overlay"><span class="lock-icon">♥</span><span class="lock-label">dthw dangiu</span></div>
       </div>
-      <div class="photo-card" data-caption="ngày đặc biệt">
+      <div class="photo-card" data-caption="all I want for Christmas">
         <img src="images/photo3.jpg" alt="kỷ niệm 3">
         <div class="lock-overlay"><span class="lock-icon">♥</span><span class="lock-label">all I want for Christmas</span></div>
       </div>
-      <div class="photo-card" data-caption="nụ cười của em">
+      <div class="photo-card" data-caption="chỉ bạn bè th hả?">
         <img src="images/photo4.jpg" alt="kỷ niệm 4">
-        <div class="lock-overlay"><span class="lock-icon">♥</span><span class="lock-label">bạn bè th hả?</span></div>
+        <div class="lock-overlay"><span class="lock-icon">♥</span><span class="lock-label">chỉ bạn bè th hả?</span></div>
       </div>
-      <div class="photo-card" data-caption="kỷ niệm đáng nhớ">
+      <div class="photo-card" data-caption="bạn Minh meo">
         <img src="images/photo5.jpg" alt="kỷ niệm 5">
-        <div class="lock-overlay"><span class="lock-icon">♥</span><span class="lock-label">bạn doraemon Minh</span></div>
+        <div class="lock-overlay"><span class="lock-icon">♥</span><span class="lock-label">bạn Minh meo</span></div>
       </div>
-      <div class="photo-card" data-caption="mãi mãi">
+      <div class="photo-card" data-caption="đừng rời xa nhé">
         <img src="images/photo6.jpg" alt="kỷ niệm 6">
-        <div class="lock-overlay"><span class="lock-icon">♥</span><span class="lock-label">mãi mãi</span></div>
+        <div class="lock-overlay"><span class="lock-icon">♥</span><span class="lock-label">đừng rời xa nhé</span></div>
       </div>
     </div>
     <button class="fade-btn" id="to-closing-btn">tiếp tục →</button>
@@ -89,7 +122,21 @@
 
   <!-- SCREEN 4: CLOSING (last message) -->
   <section class="screen hidden-section" id="closing-screen">
-    <h2 class="closing-title">dù xa nhau bao xa,<br>tim anh vẫn hướng về em</h2>
+    <div class="version-card">
+      <p class="version-text">Version 1.0
+Released: 2026
+
+Known bugs:
+- Vẫn lệch nhau 11 tiếng.
+- Vẫn chưa hiểu vì sao em tự nhận mình dốt.
+- Con chuột vẫn giống con mèo.
+
+Future updates:
+Có thể.
+
+Khi nào có chuyện gì hay ho thì nhớ kể anh nghe nhé.
+— Minh</p>
+    </div>
     <p class="closing-sub">chạm vào màn hình để thả thêm trái tim ♥</p>
     <button class="fade-btn" id="close-letter-btn">đóng lại</button>
   </section>

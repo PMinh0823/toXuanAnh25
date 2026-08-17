@@ -1,17 +1,8 @@
-/* =====================================================
-   PASTE YOUR VIETNAMESE MESSAGE HERE.
-   Use \n for a line break / new paragraph.
-   ===================================================== */
-const MESSAGE_TEXT = `Gửi em,
-
-Đây là nơi anh muốn viết những điều anh chưa nói hết...
-
-(dán tin nhắn của anh vào đây)`;
-
 /* ===================== Screens ===================== */
 const envelope = document.getElementById('envelope');
 const envelopeScreen = document.getElementById('envelope-screen');
 const lockScreen = document.getElementById('lock-screen');
+const introScreen = document.getElementById('intro-screen');
 const letterScreen = document.getElementById('letter-screen');
 const galleryScreen = document.getElementById('gallery-screen');
 const closingScreen = document.getElementById('closing-screen');
@@ -19,11 +10,11 @@ const yesBtn = document.getElementById('yes-btn');
 const noBtn = document.getElementById('no-btn');
 const lockBtns = document.getElementById('lock-btns');
 
-const typewriterEl = document.getElementById('typewriter-text');
-const cursorEl = document.getElementById('cursor');
+const introContinueBtn = document.getElementById('intro-continue-btn');
 const continueBtn = document.getElementById('continue-btn');
 const closeLetterBtn = document.getElementById('close-letter-btn');
 const toClosingBtn = document.getElementById('to-closing-btn');
+const photoCards = document.querySelectorAll('.photo-card');
 
 function showScreen(el) {
   el.classList.remove('hidden-section');
@@ -147,37 +138,28 @@ noBtn.addEventListener('click', (e) => { e.preventDefault(); dodgeNoBtnNear(); }
 
 yesBtn.addEventListener('click', () => {
   hideScreen(lockScreen);
-  showScreen(letterScreen);
-  startTypewriter();
+  showScreen(introScreen);
 });
 
-/* ===================== Typewriter ===================== */
-function startTypewriter() {
-  let i = 0;
-  typewriterEl.textContent = '';
-  continueBtn.style.display = 'none';
-  cursorEl.style.display = 'inline-block';
-  const speed = 38; // ms per character — adjust for pacing
-  function type() {
-    if (i < MESSAGE_TEXT.length) {
-      typewriterEl.textContent += MESSAGE_TEXT.charAt(i);
-      i++;
-      setTimeout(type, speed);
-    } else {
-      cursorEl.style.display = 'none';
-      continueBtn.style.display = 'inline-block';
-    }
-  }
-  type();
-}
+/* ===================== Letter flow (static text, no typewriter) ===================== */
+introContinueBtn.addEventListener('click', () => {
+  hideScreen(introScreen);
+  showScreen(letterScreen);
+});
 
 continueBtn.addEventListener('click', () => {
   hideScreen(letterScreen);
   showScreen(galleryScreen);
 });
 
+toClosingBtn.addEventListener('click', () => {
+  hideScreen(galleryScreen);
+  showScreen(closingScreen);
+});
+
 /* Close the last message and animate the envelope shut again (music keeps playing) */
 closeLetterBtn.addEventListener('click', () => {
+  resetExperience();
   hideScreen(closingScreen);
   setTimeout(() => {
     showScreen(envelopeScreen);
@@ -187,14 +169,21 @@ closeLetterBtn.addEventListener('click', () => {
   }, 700);
 });
 
-toClosingBtn.addEventListener('click', () => {
-  hideScreen(galleryScreen);
-  showScreen(closingScreen);
-});
+/* Reset everything back to its starting state so she can replay without refreshing */
+function resetExperience() {
+  // "Không" button back to its original spot next to "Có"
+  noBtn.style.position = '';
+  noBtn.style.left = '';
+  noBtn.style.top = '';
+  noBtn.style.transition = '';
+
+  // Gallery back to blurred/locked with captions hidden
+  photoCards.forEach(card => card.classList.remove('revealed'));
+  toClosingBtn.style.display = 'none';
+}
 
 /* ===================== Gallery reveal ===================== */
-const photoCards = document.querySelectorAll('.photo-card');
-document.querySelectorAll('.photo-card').forEach(card => {
+photoCards.forEach(card => {
   card.addEventListener('click', () => {
     if (card.classList.contains('revealed')) return;
     card.classList.add('revealed');

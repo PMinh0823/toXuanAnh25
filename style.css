@@ -236,25 +236,25 @@ html, body {
   backdrop-filter: blur(6px);
 }
 
-.typewriter-text {
+.letter-eyebrow {
+  font-family: var(--body-font);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 12px;
+  color: var(--gold);
+  margin: 0 0 18px;
+}
+
+.letter-text {
   font-family: var(--display-font);
   font-style: italic;
-  font-size: clamp(18px, 2.4vw, 26px);
-  line-height: 1.8;
+  font-size: clamp(17px, 2.2vw, 23px);
+  line-height: 1.85;
   white-space: pre-wrap;
   color: var(--blush);
   margin: 0;
-  display: inline;
+  text-align: left;
 }
-
-.cursor {
-  display: inline-block;
-  color: var(--rose);
-  animation: blink 0.9s step-end infinite;
-  font-size: clamp(18px, 2.4vw, 26px);
-}
-
-@keyframes blink { 50% { opacity: 0; } }
 
 .letter-actions {
   display: flex;
@@ -365,14 +365,23 @@ html, body {
 }
 
 /* ---------- Closing ---------- */
-.closing-title {
-  font-family: var(--display-font);
-  font-style: italic;
-  font-weight: 600;
-  font-size: clamp(22px, 4vw, 32px);
-  line-height: 1.5;
+.version-card {
+  max-width: 560px;
+  width: 100%;
+  background: rgba(251,240,230,0.04);
+  border: 1px solid rgba(246,225,227,0.15);
+  border-radius: 14px;
+  padding: 36px 32px;
+  backdrop-filter: blur(6px);
+  text-align: left;
+}
+.version-text {
+  font-family: 'Courier New', monospace;
+  font-size: clamp(13px, 1.8vw, 15px);
+  line-height: 1.9;
   color: var(--blush);
-  max-width: 640px;
+  white-space: pre-wrap;
+  margin: 0;
 }
 .closing-sub {
   margin-top: 18px;

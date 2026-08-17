@@ -36,11 +36,18 @@
 
   <!-- SCREEN 1.5: LOCK QUESTION (yes/no, "no" runs away) -->
   <section class="screen hidden-section" id="lock-screen">
-    <h2 class="lock-question" id="lock-question">Em có thích anh không?</h2>
-    <p class="lock-sub">(chọn đi, không trốn được đâu... trừ một nút)</p>
-    <div class="lock-btns" id="lock-btns">
-      <button class="lock-btn lock-btn-yes" id="yes-btn">Có</button>
-      <button class="lock-btn lock-btn-no" id="no-btn">Không</button>
+    <div class="lock-question-wrap" id="lock-question-wrap">
+      <h2 class="lock-question" id="lock-question">Câu hỏi bảo mật:<br>Anh có đẹp trai không?</h2>
+      <p class="lock-sub">(chọn đi, không trốn được đâu... trừ một nút)</p>
+      <div class="lock-btns" id="lock-btns">
+        <button class="lock-btn lock-btn-yes" id="yes-btn">Có</button>
+        <button class="lock-btn lock-btn-no" id="no-btn">Không</button>
+      </div>
+    </div>
+    <div class="lock-confirm-wrap" id="lock-confirm-wrap">
+      <p class="lock-confirm-text">Hệ thống xác nhận: <span class="ticked-box">✓</span></p>
+      <p class="lock-confirm-text">Em là người trung thực.</p>
+      <button class="fade-btn fade-btn-primary" id="lock-continue-btn" style="display:none;">tiếp tục →</button>
     </div>
   </section>
 

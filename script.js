@@ -15,6 +15,9 @@ const continueBtn = document.getElementById('continue-btn');
 const closeLetterBtn = document.getElementById('close-letter-btn');
 const toClosingBtn = document.getElementById('to-closing-btn');
 const photoCards = document.querySelectorAll('.photo-card');
+const lockQuestionWrap = document.getElementById('lock-question-wrap');
+const lockConfirmWrap = document.getElementById('lock-confirm-wrap');
+const lockContinueBtn = document.getElementById('lock-continue-btn');
 
 function showScreen(el) {
   el.style.opacity = '0';
@@ -153,6 +156,22 @@ noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); dodgeNoBtnFar(
 noBtn.addEventListener('click', (e) => { e.preventDefault(); dodgeNoBtnNear(); });
 
 yesBtn.addEventListener('click', () => {
+  // Fade out the question, then fade in the confirmation message.
+  // After she's had a few seconds to read it, reveal the continue button.
+  lockQuestionWrap.style.opacity = '0';
+  setTimeout(() => {
+    lockQuestionWrap.style.display = 'none';
+    lockConfirmWrap.style.display = 'flex';
+    lockConfirmWrap.style.opacity = '0';
+    void lockConfirmWrap.offsetWidth;
+    requestAnimationFrame(() => { lockConfirmWrap.style.opacity = '1'; });
+  }, 900);
+  setTimeout(() => {
+    lockContinueBtn.style.display = 'inline-block';
+  }, 900 + 2200);
+});
+
+lockContinueBtn.addEventListener('click', () => {
   transitionTo(lockScreen, introScreen);
 });
 
@@ -184,6 +203,13 @@ function resetExperience() {
   noBtn.style.left = '';
   noBtn.style.top = '';
   noBtn.style.transition = '';
+
+  // Lock screen back to the question, confirmation hidden again
+  lockQuestionWrap.style.display = '';
+  lockQuestionWrap.style.opacity = '';
+  lockConfirmWrap.style.display = 'none';
+  lockConfirmWrap.style.opacity = '0';
+  lockContinueBtn.style.display = 'none';
 
   // Gallery back to blurred/locked with captions hidden
   photoCards.forEach(card => card.classList.remove('revealed'));
